@@ -1,5 +1,11 @@
 {
-  "name": "text-convert-case-nextjs",
+  "name": "text-convert-case-next",
+  "repository": "https://github.com/BradHick/text-convert-case",
+  "author": "Brad Hick (https://github.com/BradHick)",
+  "homepage": "https://textconvertcase.com",
+  "contributors": [
+    "Brad Hick (https://github.com/BradHick)"
+  ],
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,8 +14,12 @@
     "start": "next start"
   },
   "dependencies": {
+    "antd": "^4.14.1",
+    "babel-plugin-import": "^1.13.3",
+    "babel-plugin-inline-import": "^3.0.0",
     "next": "10.0.9",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "text-case": "^1.0.9"
   }
 }
