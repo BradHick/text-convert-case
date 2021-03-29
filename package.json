@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "babel-plugin-transform-define": "^2.0.0",
+    "babel-preset-nextjs": "^10.0.2-canary.20",
     "gh-pages": "^3.1.0",
     "rimraf": "^3.0.2"
   }

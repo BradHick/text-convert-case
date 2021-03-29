@@ -103,7 +103,7 @@ export default function About() {
             </Typography.Paragraph>
           </div>
           <Row justify='center'>
-            <Link href='/' as={process.env.BACKEND_URL + '/'}>
+            <Link href='/'>
               <a>Back to Home</a>
             </Link>
           </Row>

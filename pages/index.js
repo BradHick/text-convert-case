@@ -1,6 +1,16 @@
 import Head from 'next/head';
 import React, { useState } from 'react';
-import { Layout, Button, Input, Row, Col, Typography, Divider } from 'antd';
+import {
+  Layout,
+  Button,
+  Input,
+  Row,
+  Col,
+  Typography,
+  Divider,
+  message,
+} from 'antd';
+// import dynamic from 'next/dynamic';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import CasesDescription from './components/CasesDescription';
@@ -21,17 +31,111 @@ import {
   swapCase, // `sWaP cAsE` -> `SwAp CaSe`
 } from 'text-case';
 import Link from 'next/link';
-import copyToClipboard from './helpers/copyToClipboard';
-import downloadTxtFile from './helpers/downloadTxtFile';
-import capitalCase from './helpers/capitalCase';
-import titleCase from './helpers/titleCase';
-import sentenceCase from './helpers/sentenceCase';
-import alternatingCase from './helpers/alternatingCase';
+// import copyToClipboard from './helpers/copyToClipboard';
+// import downloadTxtFile from './helpers/downloadTxtFile';
+// import capitalCase from './helpers/capitalCase';
+// import titleCase from './helpers/titleCase';
+// import sentenceCase from './helpers/sentenceCase';
+// import alternatingCase from './helpers/alternatingCase';
+// const copyToClipboard = dynamic(() => import('./helpers/copyToClipboard'));
+// const downloadTxtFile = dynamic(() => import('./helpers/downloadTxtFile'));
+// const capitalCase = dynamic(() => import('./helpers/capitalCase'));
+// const titleCase = dynamic(() => import('./helpers/titleCase'));
+// const sentenceCase = dynamic(() => import('./helpers/sentenceCase'));
+// const alternatingCase = dynamic(() => import('./helpers/alternatingCase'));
 import stylesheet from 'antd/dist/antd.min.css';
 
 const { Content } = Layout;
 
 const { TextArea } = Input;
+
+function alternatingCase(a) {
+  if (!a) {
+    a = '';
+  }
+  a = a.toLowerCase();
+  for (var b = '', c = 0; c < a.length; c++) {
+    var d = a.charAt(c);
+    b += c % 2 ? d.toUpperCase() : d;
+  }
+  return b;
+}
+
+const capitalCase = (a) => {
+  let c;
+  return (
+    (c = a.toLowerCase()),
+    (c = (c + '').replace(/^(\S)|\s+(\S)/g, function (a) {
+      return a.toUpperCase();
+    })),
+    // (c = _(c)),
+    (c = c.replace(/\(([A-Za-z])/g, function (a) {
+      return a.toUpperCase();
+    })),
+    c
+  );
+};
+
+function copyToClipboard(textValue) {
+  try {
+    if (typeof window !== 'undefined') {
+      let textField = window.document.createElement('textarea');
+      textField.innerText = textValue;
+      document.body.appendChild(textField);
+      textField.select();
+      document.execCommand('copy');
+      textField.remove();
+      message.success('Copied !');
+    }
+  } catch (err) {
+    message.error(err);
+  }
+}
+
+function downloadTxtFile(textValue) {
+  if (typeof window !== 'undefined') {
+    const element = window.document.createElement('a');
+    const file = new Blob([textValue], { type: 'text/plain' });
+    element.href = URL.createObjectURL(file);
+    element.download = 'TextConvertCase.txt';
+    document.body.appendChild(element); // Required for this to work in FireFox
+    element.click();
+  }
+}
+
+function sentenceCase(value) {
+  if (!value) {
+    value = '';
+  }
+  value = value.toLowerCase();
+  let c = '';
+  for (let b = !0, d = 0; d < value.length; d++) {
+    var e = value.charAt(d);
+    // eslint-disable-next-line no-unused-expressions
+    /\.|\\!|\?|\n|\r/.test(e)
+      ? (b = !0)
+      : // eslint-disable-next-line no-sequences
+        // eslint-disable-next-line eqeqeq
+        '' != e.trim() && 1 == b && ((e = e.toUpperCase()), (b = !1)),
+      (c += e);
+  }
+  return c;
+}
+
+function titleCase(a) {
+  if (!a) {
+    a = '';
+  }
+  return (a = (a = (a = capitalCase(a)).replace(
+    /\b(A|An|And|As|At|But|By|En|For|If|In|Of|On|Or|The|To|Da|Do|Das|Dos|As|Os|O|E|Em|De|Vs?\\.?|Via)\b/g,
+    function (_) {
+      return _.toLowerCase();
+    }
+  )).replace(
+    /(?:([\\.\\?!] |\n|^))(a|an|and|as|at|but|by|en|for|if|in|of|on|or|the|to|da|do|de|das|dos|e|em|as|os|vs?\\.?|via)/g,
+    capitalCase
+  ));
+}
 
 export default function Home() {
   const [value, setValue] = useState(
