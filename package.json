@@ -11,7 +11,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "export": "next export",
+    "deploy": "rm -rf node_modules/.cache && rimraf out && next build && next export && touch out/.nojekyll && touch out/CNAME && echo \"textconvertcase.com\" >> out/CNAME && gh-pages -d out -t true"
   },
   "dependencies": {
     "antd": "^4.14.1",
@@ -21,5 +23,10 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "text-case": "^1.0.9"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-define": "^2.0.0",
+    "gh-pages": "^3.1.0",
+    "rimraf": "^3.0.2"
   }
 }
