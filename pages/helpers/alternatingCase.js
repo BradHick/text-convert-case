@@ -1,4 +1,4 @@
-const alternatingCase = (a) => {
+const alternatingCase = (a = '') => {
   a = a.toLowerCase();
   for (var b = '', c = 0; c < a.length; c++) {
     var d = a.charAt(c);
